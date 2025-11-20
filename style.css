@@ -475,11 +475,13 @@ body {
     flex: 1;
     justify-content: center;
     text-align: center;
+    min-height: 44px;
 }
 
 .card-actions .btn-primary {
     flex: 2;
     justify-content: center;
+    min-height: 44px;
 }
 
 /* Skeleton Loading com cor sutil */
@@ -557,6 +559,7 @@ body {
     color: white;
     border: none;
     border-radius: 50%;
+    min-height: auto;
 }
 
 .modal-title {
@@ -669,6 +672,7 @@ input, textarea, select {
     background: var(--bg-card);
     font-size: 0.95rem;
     transition: var(--transition);
+    min-height: 44px;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -691,7 +695,9 @@ input:focus, textarea:focus, select:focus {
     flex-wrap: wrap;
 }
 
-/* Responsive Design */
+/* ========== CORREÇÕES MOBILE ========== */
+
+/* Breakpoint para tablets */
 @media (max-width: 1024px) {
     .container {
         padding: 0 16px;
@@ -707,20 +713,25 @@ input:focus, textarea:focus, select:focus {
     }
 }
 
+/* Breakpoint para mobile grande */
 @media (max-width: 768px) {
     .header-row {
         flex-direction: column;
         align-items: stretch;
         gap: 16px;
+        padding: 12px 0;
     }
     
     .brand-row {
         justify-content: center;
         text-align: center;
+        flex-direction: column;
+        gap: 8px;
     }
     
     .brand-text .muted {
-        display: none;
+        display: block;
+        font-size: 0.8rem;
     }
     
     .search-bar {
@@ -730,12 +741,15 @@ input:focus, textarea:focus, select:focus {
     
     .search-bar select {
         min-width: auto;
+        width: 100%;
     }
     
     .results-info {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 12px;
+        padding: 12px;
+        margin-bottom: 16px;
     }
     
     .grid {
@@ -745,6 +759,13 @@ input:focus, textarea:focus, select:focus {
     
     .card-actions {
         flex-direction: column;
+        gap: 8px;
+    }
+    
+    .card-actions .btn-ghost,
+    .card-actions .btn-primary {
+        width: 100%;
+        min-height: 44px;
     }
     
     .form-actions {
@@ -754,9 +775,32 @@ input:focus, textarea:focus, select:focus {
     .form-actions .btn-primary,
     .form-actions .btn-ghost {
         width: 100%;
+        min-height: 44px;
+    }
+    
+    /* Corrigir header actions no mobile */
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .top-nav {
+        width: 100%;
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .top-nav .btn-ghost {
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+        font-size: 0.85rem;
+        padding: 12px 8px;
+        min-height: 44px;
     }
 }
 
+/* Breakpoint para mobile pequeno */
 @media (max-width: 480px) {
     .container {
         padding: 0 12px;
@@ -769,49 +813,129 @@ input:focus, textarea:focus, select:focus {
     
     .card {
         padding: 16px;
+        margin: 0;
     }
     
     .page-title {
         font-size: 1.75rem;
+        line-height: 1.2;
     }
     
     .page-subtitle {
         font-size: 1rem;
+        line-height: 1.4;
     }
     
-    .header-actions {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .top-nav {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .top-nav .btn-ghost {
-        flex: 1;
-        justify-content: center;
-        text-align: center;
-        font-size: 0.8rem;
-        padding: 8px 12px;
+    /* Corrigir modal no mobile */
+    .modal {
+        padding: 10px;
+        align-items: flex-end;
     }
     
     .modal-content {
         margin: 0;
-        max-height: 100vh;
-        border-radius: 0;
+        max-height: 85vh;
+        border-radius: 16px 16px 0 0;
+        animation: slideUpMobile 0.3s ease;
     }
     
+    @keyframes slideUpMobile {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .modal-close {
+        right: 12px;
+        top: 12px;
+        width: 36px;
+        height: 36px;
+    }
+    
+    /* Corrigir admin no mobile */
     .admin-list-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+        padding: 12px 0;
+    }
+    
+    .admin-list-item:hover {
+        margin: 0 -12px;
+        padding: 12px;
     }
     
     .admin-list-item .flex {
         width: 100%;
-        justify-content: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    
+    .admin-list-item .flex .btn-ghost {
+        flex: 1;
+        min-width: calc(33.333% - 8px);
+        font-size: 0.8rem;
+        padding: 8px 6px;
+        min-height: 40px;
+    }
+    
+    /* Garantir que botões sejam tocáveis no mobile */
+    button, 
+    .btn-primary, 
+    .btn-ghost, 
+    input[type="submit"] {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+    
+    /* Melhorar inputs no mobile */
+    input, select, textarea {
+        font-size: 16px; /* Prevenir zoom no iOS */
+        min-height: 44px;
+    }
+    
+    /* Corrigir cart no mobile */
+    .cart-qty {
+        min-height: 44px;
+        font-size: 16px;
+    }
+    
+    /* Ajustar toast para mobile */
+    .toast {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        transform: translateY(-100px);
+    }
+    
+    .toast.show {
+        transform: translateY(0);
+    }
+}
+
+/* Breakpoint para mobile muito pequeno */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 8px;
+    }
+    
+    .card {
+        padding: 12px;
+    }
+    
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .top-nav .btn-ghost {
+        font-size: 0.75rem;
+        padding: 10px 6px;
+    }
+    
+    .admin-list-item .flex .btn-ghost {
+        min-width: calc(50% - 4px);
+        font-size: 0.75rem;
     }
 }
 
@@ -842,4 +966,16 @@ input:focus, textarea:focus, select:focus {
     .btn-primary::before {
         display: none;
     }
+}
+
+/* Prevenir scroll horizontal */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Melhorar performance de scroll */
+.modal-content,
+#cart-body {
+    -webkit-overflow-scrolling: touch;
 }

@@ -154,9 +154,12 @@ async function renderProductsList() {
   // Show loading state
   container.innerHTML = `
     <div class="skeleton-cards">
-      ${Array(6).fill(0).map(() => `
-        <div class="card skeleton skeleton-card"></div>
-      `).join('')}
+      <div class="card skeleton skeleton-card"></div>
+      <div class="card skeleton skeleton-card"></div>
+      <div class="card skeleton skeleton-card"></div>
+      <div class="card skeleton skeleton-card"></div>
+      <div class="card skeleton skeleton-card"></div>
+      <div class="card skeleton skeleton-card"></div>
     </div>
   `
 
@@ -274,14 +277,14 @@ async function openProductModal(id) {
   `
   
   modal.setAttribute('aria-hidden', 'false')
-  document.body.style.overflow = 'hidden' // Prevent background scroll
+  document.body.style.overflow = 'hidden'
 }
 
 function closeProductModal() {
   const modal = document.getElementById('product-modal')
   if (modal) {
     modal.setAttribute('aria-hidden', 'true')
-    document.body.style.overflow = '' // Restore scroll
+    document.body.style.overflow = ''
   }
 }
 
@@ -586,11 +589,11 @@ async function renderCartModal() {
         </div>
         <div class="flex" style="align-items: center; gap: 12px;">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <button class="btn-ghost" data-id="${p.id}" data-action="decrease" style="padding: 4px 8px; font-size: 1.2rem;">−</button>
-            <input type="number" min="1" data-id="${p.id}" class="cart-qty" value="${ci.qty}" style="width: 60px; text-align: center; padding: 4px;">
-            <button class="btn-ghost" data-id="${p.id}" data-action="increase" style="padding: 4px 8px; font-size: 1.2rem;">+</button>
+            <button class="btn-ghost" data-id="${p.id}" data-action="decrease" style="padding: 4px 8px; font-size: 1.2rem; min-height: 44px;">−</button>
+            <input type="number" min="1" data-id="${p.id}" class="cart-qty" value="${ci.qty}" style="width: 60px; text-align: center; padding: 4px; min-height: 44px;">
+            <button class="btn-ghost" data-id="${p.id}" data-action="increase" style="padding: 4px 8px; font-size: 1.2rem; min-height: 44px;">+</button>
           </div>
-          <button class="btn-ghost" data-id="${p.id}" data-action="remove" style="color: var(--error);">🗑️</button>
+          <button class="btn-ghost" data-id="${p.id}" data-action="remove" style="color: var(--error); min-height: 44px;">🗑️</button>
         </div>
       </div>
     `
@@ -611,10 +614,10 @@ async function renderCartModal() {
         <strong style="font-size: 1.5rem; color: var(--brand);">${formatCurrency(total)}</strong>
       </div>
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <button id="cart-whatsapp" class="btn-primary" style="flex: 2;">
+        <button id="cart-whatsapp" class="btn-primary" style="flex: 2; min-height: 44px;">
           💬 Enviar pedido via WhatsApp
         </button>
-        <button id="cart-clear" class="btn-ghost" style="flex: 1;">
+        <button id="cart-clear" class="btn-ghost" style="flex: 1; min-height: 44px;">
           🗑️ Limpar
         </button>
       </div>
@@ -714,17 +717,11 @@ function isAuthenticated() {
 
 function showAdminControls() {
   const adminLink = document.getElementById('admin-link')
-  const loginLink = document.getElementById('login-link')
-  const logoutBtn = document.getElementById('logout-btn')
   
   if (isAuthenticated()) {
     if (adminLink) adminLink.style.display = ''
-    if (loginLink) loginLink.style.display = 'none'
-    if (logoutBtn) logoutBtn.style.display = ''
   } else {
     if (adminLink) adminLink.style.display = 'none'
-    if (loginLink) loginLink.style.display = ''
-    if (logoutBtn) logoutBtn.style.display = 'none'
   }
 }
 
@@ -794,17 +791,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         ev.currentTarget.setAttribute('aria-hidden', 'true')
         document.body.style.overflow = ''
       }
-    })
-    
-    // Auth system
-    document.addEventListener('click', (ev) => {
-      const btn = ev.target.closest('#logout-btn')
-      if (!btn) return
-      
-      sessionStorage.removeItem('admin_auth')
-      sessionStorage.removeItem('admin_user')
-      showToast('Logout realizado', 'warning')
-      setTimeout(() => location.href = 'index.html', 1000)
     })
     
     // Initialize auth and cart
