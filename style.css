@@ -717,7 +717,6 @@ input:focus, textarea:focus, select:focus {
 
 /* Breakpoint para mobile grande */
 @media (max-width: 768px) {
-
 /* Floating cart button - a bit larger and positioned slightly lower */
 .floating-cart{
     position:fixed;
@@ -742,15 +741,15 @@ input:focus, textarea:focus, select:focus {
     .header-row {
         flex-direction: column;
         align-items: stretch;
-        gap: 16px;
-        padding: 12px 0;
+        gap: 10px;
+        padding: 8px 0; /* reduced for mobile to show more body */
     }
     
     .brand-row {
         justify-content: center;
         text-align: center;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
     
     .brand-text .muted {
@@ -947,6 +946,12 @@ input:focus, textarea:focus, select:focus {
     .toast.show {
         transform: translateY(0);
     }
+
+    /* Make header more compact on very small screens */
+    .header-row { padding: 6px 0; }
+    .logo { height: 36px; }
+    .brand-text { display: none; }
+    .site-footer { padding: 12px 0; }
 }
 
 /* Breakpoint para mobile muito pequeno */
